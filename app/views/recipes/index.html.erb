@@ -1,0 +1,19 @@
+<%= link_to "Go to cookbook", favorites_index_path %>
+<h1>All Recipes</h1>
+<div>
+  <% @recipes.each do |recipe| %>
+    <div>
+      <h2><%= recipe.title %></h2>
+      <p><%= recipe.description %></p>
+      <% if user_signed_in? %>
+        <% favorite = current_user.favorites.find_by(recipe: recipe) %>
+        <% if favorite %>
+          <%= button_to "Remove from cookbook", favorite_path(favorite), method: :delete %>
+        <% else %>
+          <%= button_to "Add to cookbook", favorites_path(recipe_id: recipe.id), method: :post %>
+        <% end %>
+      <% end %>
+      <%= link_to "View recipe", recipe_path(recipe) %>
+    </div>
+  <% end %>
+</div>

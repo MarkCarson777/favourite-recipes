@@ -1,0 +1,16 @@
+<%= link_to "Back to all recipes", recipes_path %>
+
+<h1>My Cookbook</h1>
+<% if @favorite_recipes.empty? %>
+  <p>Your cookbook is empty. Add some recipes!</p>
+<% else %>
+  <% @favorite_recipes.each do |recipe| %>
+    <div>
+      <h2><%= recipe.title %></h2>
+      <p><%= recipe.description %></p>
+      <% favorite = current_user.favorites.find_by(recipe: recipe) %>
+      <%= button_to "Remove from cookbook", favorite_path(favorite), method: :delete %>
+      <%= link_to "View", recipe_path(recipe) %>
+    </div>
+  <% end %>
+<% end %>
